@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -14,12 +13,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  nickname: {
+  studentNumber: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phoneNumber: {
     type: String,
     required: true,
   },
-  job: {
+  adminStatus: {
     type: String,
+    enum: ["active", "inactive"],
+    default: "inactive",
   },
 });
 
