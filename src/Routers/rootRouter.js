@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import User from "../models/User";
 
 const rootRouter = express.Router();
@@ -16,14 +16,18 @@ const postLogin = async (req, res) => {
   if (!exists) {
     return res.json({
       message: "가입되지 않은 학번입니다.",
-      isLogin: false,
     });
   } else {
     if (password === user.password) {
-      return res.json({ message: "로그인 성공", isLogin: true });
+      return res.json({ message: "로그인 성공" });
     }
-    return res.json({ message: "비밀번호가 틀렸습니다", isLogin: false });
+    return res.json({ message: "비밀번호가 틀렸습니다" });
   }
+};
+const getLogin = async (req, res) => {
+  const isLogin = req.session.isLogin;
+  const user = req.session.user;
+  return res.json({ isLogin, user });
 };
 const postJoin = async (req, res) => {
   const {
@@ -70,9 +74,12 @@ const postJoin = async (req, res) => {
     return res.json({ message: { err } });
   }
 };
-
+rootRouter.post("/logout", async (req, res) => {
+  req.session.isLogin = false;
+  res.send("Logged out");
+});
+rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.get("/", testHandler);
 
-rootRouter.post("/login", postLogin);
 rootRouter.post("/join", postJoin);
 export default rootRouter;

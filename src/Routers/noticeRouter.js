@@ -16,6 +16,9 @@ const createPost = async (req, res) => {
 
   return res.json({ message: "글 생성완료" });
 };
-
+const getDetail = async (req, res) => {
+  console.log("디테일나옴");
+};
 noticeRouter.post("/create", createPost);
+noticeRouter.get("/detail/:id([1-9a-f]{24})", getDetail);
 export default noticeRouter;

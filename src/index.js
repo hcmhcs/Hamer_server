@@ -5,7 +5,9 @@ import rootRouter from "./Routers/rootRouter";
 import noticeRouter from "./Routers/noticeRouter";
 import userRouter from "./Routers/userRouter";
 import cors from "cors";
-
+// import session from "express-session";
+// import cookieParser from "cookie-parser";
+// import MongoStore from "connect-mongo";
 const PORT = 4000;
 const app = express();
 const logger = morgan("dev");
@@ -18,6 +20,20 @@ app.use(
     credentials: true,
   })
 );
+
+//세션부분
+// app.use(cookieParser);
+// app.use(
+//   session({
+//     secret: "hamer",
+//     resave: false,
+//     saveUninitialized: false,
+//     store: MongoStore.create({
+//       mongoUrl: "mongodb://localhost/my-database",
+//       ttl: 24 * 60 * 60, // session TTL in seconds
+//     }),
+//   })
+// );
 
 app.use("/", rootRouter);
 app.use("/user", userRouter);
