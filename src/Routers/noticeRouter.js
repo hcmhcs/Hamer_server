@@ -3,22 +3,29 @@ import Post from "../models/Post";
 const noticeRouter = express.Router();
 const getPost = async (res, req) => {
   const posts = await Post.find({});
-  console.log(posts);
   req.json(posts);
 };
 noticeRouter.get("/", getPost);
 
 const createPost = async (req, res) => {
-  console.log(req.body);
-  const { title, context } = req.body.post;
-  console.log(title, context);
-  await Post.create({ title, context });
+  const { title, context, author } = req.body.post;
+  await Post.create({ title, context, author });
 
   return res.json({ message: "글 생성완료" });
 };
-const getDetail = async (req, res) => {
-  console.log("디테일나옴");
+const deletePost = async (req, res) => {
+  const _id = req.params.id;
+  console.log(_id);
+  try {
+    await Post.deleteOne({ _id });
+    console.log("삭제완료");
+    return res.json({ message: "ok" });
+  } catch (err) {
+    console.log("에러뜸");
+    return res.json({ message: { err } });
+  }
 };
+
 noticeRouter.post("/create", createPost);
-noticeRouter.get("/detail/:id([1-9a-f]{24})", getDetail);
+noticeRouter.delete("/:id([0-9a-f]{24})", deletePost);
 export default noticeRouter;
