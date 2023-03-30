@@ -9,7 +9,6 @@ const postSchema = new mongoose.Schema(
     context: {
       type: String,
       required: true,
-      unique: true,
     },
     author: {
       type: String,

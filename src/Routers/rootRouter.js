@@ -20,6 +20,7 @@ const postLogin = async (req, res) => {
       return res.json({
         message: "로그인 성공",
         isLogin: true,
+        _id: user._id,
         name: user.name,
       });
     }

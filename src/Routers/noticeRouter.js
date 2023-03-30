@@ -13,6 +13,7 @@ const createPost = async (req, res) => {
 
   return res.json({ message: "글 생성완료" });
 };
+
 const deletePost = async (req, res) => {
   const _id = req.params.id;
   console.log(_id);
