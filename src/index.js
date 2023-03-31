@@ -12,7 +12,7 @@ const PORT = 4000;
 const app = express();
 const logger = morgan("dev");
 
-// app.use(logger);
+app.use(logger);
 app.use(express.json());
 app.use(
   cors({
