@@ -1,8 +1,13 @@
 import User from "../models/User";
-
+import Post from "../models/Post";
 export const testHandler = (req, res) => {
   const data = { message: "안녕 난 nodejs 서버에서 날라왔어" };
   res.json(data);
+};
+
+export const logout = async (req, res) => {
+  req.session.isLogin = false;
+  res.send("Logged out");
 };
 
 export const postLogin = async (req, res) => {
@@ -19,7 +24,6 @@ export const postLogin = async (req, res) => {
         message: "로그인 성공",
         isLogin: true,
         _id: user._id,
-        name: user.name,
       });
     }
     return res.json({ message: "비밀번호가 틀렸습니다" });
@@ -57,7 +61,7 @@ export const postJoin = async (req, res) => {
         password,
         phoneNumber,
         studentNumber,
-        adminStatus: "active",
+        adminStatus: true,
       });
     } else {
       await User.create({
@@ -66,7 +70,7 @@ export const postJoin = async (req, res) => {
         password,
         phoneNumber,
         studentNumber,
-        adminStatus: "inactive",
+        adminStatus: false,
       });
     }
 

@@ -23,9 +23,12 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   adminStatus: {
+    type: Boolean,
+    enum: [true, false],
+    default: false,
+  },
+  role: {
     type: String,
-    enum: ["active", "inactive"],
-    default: "inactive",
   },
 });
 

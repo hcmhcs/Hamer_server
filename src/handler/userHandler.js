@@ -31,5 +31,4 @@ export const getUser = async (req, res) => {
     console.log("에러");
     return res.json({ message: { err } });
   }
-  console.log(유저값);
 };
