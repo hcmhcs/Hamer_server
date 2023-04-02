@@ -1,13 +1,8 @@
 import User from "../models/User";
 import Post from "../models/Post";
 export const testHandler = (req, res) => {
-  const data = { message: "안녕 난 nodejs 서버에서 날라왔어" };
+  const data = { message: "테스트 메세지 from  Server!" };
   res.json(data);
-};
-
-export const logout = async (req, res) => {
-  req.session.isLogin = false;
-  res.send("Logged out");
 };
 
 export const postLogin = async (req, res) => {
@@ -78,4 +73,9 @@ export const postJoin = async (req, res) => {
   } catch (err) {
     return res.json({ message: { err } });
   }
+};
+
+export const logout = async (req, res) => {
+  req.session.isLogin = false;
+  res.send("Logged out");
 };

@@ -5,20 +5,6 @@ export const getUserList = async (req, res) => {
   return res.json(users);
 };
 
-export const getDeleteUser = async (req, res) => {
-  console.log("deleteUser get 요청이 옴");
-  const _id = req.params.id;
-  console.log(_id);
-  try {
-    await User.deleteOne({ _id });
-    console.log("삭제완료");
-    return res.json({ message: "ok" });
-  } catch (err) {
-    console.log("에러뜸");
-    return res.json({ message: { err } });
-  }
-};
-
 export const getUser = async (req, res) => {
   const _id = req.params.id;
   if (_id === null) {
@@ -29,6 +15,20 @@ export const getUser = async (req, res) => {
     return res.json({ message: "ok", user });
   } catch (err) {
     console.log("에러");
+    return res.json({ message: { err } });
+  }
+};
+
+export const getDeleteUser = async (req, res) => {
+  console.log("deleteUser get 요청이 옴");
+  const _id = req.params.id;
+  console.log(_id);
+  try {
+    await User.deleteOne({ _id });
+    console.log("삭제완료");
+    return res.json({ message: "ok" });
+  } catch (err) {
+    console.log("에러뜸");
     return res.json({ message: { err } });
   }
 };
