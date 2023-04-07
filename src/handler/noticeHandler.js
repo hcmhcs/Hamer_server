@@ -1,8 +1,8 @@
 import Post from "../models/Post";
 
-export const getPost = async (res, req) => {
+export const getPost = async (req, res) => {
   const posts = await Post.find({});
-  req.json(posts);
+  res.json(posts);
 };
 
 export const createPost = async (req, res) => {

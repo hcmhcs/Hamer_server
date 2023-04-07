@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const postSchema = new mongoose.Schema(
+const behindSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -16,12 +16,19 @@ const postSchema = new mongoose.Schema(
     },
     year: {
       type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: ["behind", "history"],
+      required: true,
     },
   },
+
   {
     timestamps: true,
   }
 );
 
-const Post = mongoose.model("Post", postSchema);
-export default Post;
+const Behind = mongoose.model("Behind", behindSchema);
+export default Behind;

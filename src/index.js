@@ -4,7 +4,9 @@ import morgan from "morgan";
 import rootRouter from "./Routers/rootRouter";
 import noticeRouter from "./Routers/noticeRouter";
 import userRouter from "./Routers/userRouter";
+import historyRouter from "./Routers/historyRouter";
 import cors from "cors";
+
 // import session from "express-session";
 // import cookieParser from "cookie-parser";
 // import MongoStore from "connect-mongo";
@@ -38,10 +40,11 @@ app.use(
 app.use("/", rootRouter);
 app.use("/user", userRouter);
 app.use("/notice", noticeRouter);
-
+app.use("/history", historyRouter);
 mongoose.connect("mongodb://127.0.0.1:27017/til", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  pw: process.env.PRIVATE_KEY,
 });
 const db = mongoose.connection;
 db.on("error", (error) => console.log("❌ DB ERROR", error));
