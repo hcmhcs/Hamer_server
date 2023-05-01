@@ -7,8 +7,8 @@ import userRouter from "./Routers/userRouter";
 import historyRouter from "./Routers/historyRouter";
 import cors from "cors";
 
-// import session from "express-session";
-// import cookieParser from "cookie-parser";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 // import MongoStore from "connect-mongo";
 const PORT = 4000;
 const app = express();
@@ -23,7 +23,7 @@ app.use(
   })
 );
 
-//세션부분
+// 세션부분;
 // app.use(cookieParser);
 // app.use(
 //   session({
@@ -41,6 +41,7 @@ app.use("/", rootRouter);
 app.use("/user", userRouter);
 app.use("/notice", noticeRouter);
 app.use("/history", historyRouter);
+
 mongoose.connect("mongodb://127.0.0.1:27017/til", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
