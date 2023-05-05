@@ -5,6 +5,7 @@ export const getPost = async (req, res) => {
   res.json(posts);
 };
 
+//만약 빈게 들어오면 글생성오류처리해줘야됨
 export const createPost = async (req, res) => {
   const { title, context, author } = req.body.post;
   await Post.create({ title, context, author });
