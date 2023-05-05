@@ -12,9 +12,15 @@ export const getHistorys = async (req, res) => {
 };
 export const createBehind = async (req, res) => {
   const { title, context, author, year, type } = req.body.behind;
-  await Behind.create({ title, context, author, year, type });
+  if (title === "") {
+    res.json({ message: "no", why: "제목은 필수입력사항입니다." });
+  } else if (context === "") {
+    res.json({ message: "no", why: "내용은 필수입력사항입니다." });
+  } else {
+    await Behind.create({ title, context, author, year, type });
 
-  return res.json({ message: "글 생성완료" });
+    return res.json({ message: "글 생성완료" });
+  }
 };
 export const deleteHistory = async (req, res) => {
   const _id = req.params.id;

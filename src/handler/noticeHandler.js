@@ -8,9 +8,15 @@ export const getPost = async (req, res) => {
 //만약 빈게 들어오면 글생성오류처리해줘야됨
 export const createPost = async (req, res) => {
   const { title, context, author } = req.body.post;
-  await Post.create({ title, context, author });
+  if (title === "") {
+    res.json({ message: "no", why: "제목은 필수입력사항입니다." });
+  } else if (context === "") {
+    res.sjon({ message: "no", why: "내용은 필수입력사항입니다." });
+  } else {
+    await Post.create({ title, context, author });
 
-  return res.json({ message: "글 생성완료" });
+    return res.json({ message: "글 생성완료" });
+  }
 };
 
 export const deletePost = async (req, res) => {
