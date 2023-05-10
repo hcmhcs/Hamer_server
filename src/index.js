@@ -6,10 +6,10 @@ import noticeRouter from "./Routers/noticeRouter";
 import userRouter from "./Routers/userRouter";
 import historyRouter from "./Routers/historyRouter";
 import cors from "cors";
-
+//세션유지에 사용되는 라이브러리
 import session from "express-session";
 import cookieParser from "cookie-parser";
-// import MongoStore from "connect-mongo";
+import MongoStore from "connect-mongo";
 const PORT = 4000;
 const app = express();
 const logger = morgan("dev");
@@ -22,8 +22,7 @@ app.use(
     credentials: true,
   })
 );
-
-// 세션부분;
+//세션부분
 // app.use(cookieParser);
 // app.use(
 //   session({
@@ -31,7 +30,7 @@ app.use(
 //     resave: false,
 //     saveUninitialized: false,
 //     store: MongoStore.create({
-//       mongoUrl: "mongodb://localhost/my-database",
+//       mongoUrl: "mongodb://localhost/til",
 //       ttl: 24 * 60 * 60, // session TTL in seconds
 //     }),
 //   })
