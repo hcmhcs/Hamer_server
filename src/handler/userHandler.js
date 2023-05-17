@@ -40,3 +40,15 @@ export const getDeleteUser = async (req, res) => {
     return res.status(500).json({ message: { err } });
   }
 };
+export const editUser = async (req, res) => {
+  const _id = req.body._id;
+  if (_id === null) {
+    return res.status(400).json({ message: "no params" });
+  }
+  try {
+    await User.updateMany({ _id }, { $set: req.body.editUser });
+    return res.status(204).json({ message: "수정완료!" });
+  } catch (err) {
+    return res.status(500);
+  }
+};
