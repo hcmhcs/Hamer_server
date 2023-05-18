@@ -27,11 +27,21 @@ export const testHandler = (req, res) => {
   const data = { message: "테스트 메세지 from  Server!" };
   res.status(200).json(data);
 };
-
+export const postComparePassword = async (req, res) => {
+  const { _id, password } = req.body;
+  const user = await User.findOne({ _id });
+  console.log(comparePassword(password, user.password));
+  console.log(user.password);
+  if (await comparePassword(password, user.password)) {
+    return res.status(204).json({ message: "성공" });
+  } else {
+    return res.status(404).json({ message: "잘못된 비밀번호" });
+  }
+};
 export const postLogin = async (req, res) => {
   const { studentNumber, password } = req.body.user;
   if (studentNumber === null || password === null) {
-    return res.status(400);
+    return res.status(400).json({ message: "비밀번호나 학번 입력해주세요" });
   }
   const exists = await User.exists({ studentNumber });
   const user = await User.findOne({ studentNumber });
@@ -41,13 +51,7 @@ export const postLogin = async (req, res) => {
       message: "가입되지 않은 학번입니다.",
     });
   } else {
-    if (comparePassword(password, user.password)) {
-      // req.session.user = user;
-      // req.session.isLogin = true;
-      // res.cookie("userId", user._id, {
-      //   maxAge: 1000 * 60 * 60 * 3,
-      //   httpOnly: true,
-      // });
+    if (await comparePassword(password, user.password)) {
       return res.status(200).json({
         message: "로그인 성공",
         isLogin: true,
