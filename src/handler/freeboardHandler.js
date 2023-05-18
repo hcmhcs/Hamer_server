@@ -1,15 +1,13 @@
 import Post from "../models/Post";
 
-export const getNotice = async (req, res) => {
-  const posts = await Post.find({ type: "notice" });
+export const getFreeboard = async (req, res) => {
+  const posts = await Post.find({ type: "freeboard" });
   if (!posts) {
     return res.status(404);
   }
   return res.status(200).json(posts);
 };
-
-//만약 빈게 들어오면 글생성오류처리해줘야됨
-export const createNotice = async (req, res) => {
+export const createFreeboard = async (req, res) => {
   const { title, context, author, type } = req.body.post;
   if (title === "") {
     return res
@@ -28,8 +26,7 @@ export const createNotice = async (req, res) => {
     }
   }
 };
-
-export const deleteNotice = async (req, res) => {
+export const deleteFreeboard = async (req, res) => {
   const _id = req.params.id;
   if (!_id) {
     return res.status(400);

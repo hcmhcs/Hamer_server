@@ -5,6 +5,7 @@ import rootRouter from "./Routers/rootRouter";
 import noticeRouter from "./Routers/noticeRouter";
 import userRouter from "./Routers/userRouter";
 import historyRouter from "./Routers/historyRouter";
+import freeboardRouter from "./Routers/freeboardRouter";
 import cors from "cors";
 //세션유지에 사용되는 라이브러리
 import session from "express-session";
@@ -40,7 +41,7 @@ app.use("/", rootRouter);
 app.use("/user", userRouter);
 app.use("/notice", noticeRouter);
 app.use("/history", historyRouter);
-
+app.use("/freeboard", freeboardRouter);
 mongoose.connect("mongodb://127.0.0.1:27017/til", {
   useNewUrlParser: true,
   useUnifiedTopology: true,

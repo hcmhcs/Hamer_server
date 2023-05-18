@@ -17,6 +17,11 @@ const postSchema = new mongoose.Schema(
     year: {
       type: String,
     },
+    type: {
+      type: String,
+      enum: ["notice", "freeboard"],
+      required: true,
+    },
   },
   {
     timestamps: true,
