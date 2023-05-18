@@ -1,5 +1,28 @@
 import User from "../models/User";
 import Post from "../models/Post";
+import bcrypt from "bcrypt";
+const saltRound = 10;
+
+const encryptPassword = async (plainPassword) => {
+  try {
+    const salt = await bcrypt.genSalt(saltRound);
+    const encryptedPassword = await bcrypt.hash(plainPassword, salt);
+    return encryptedPassword;
+  } catch (err) {
+    console.error("암호화실패", err);
+    throw err;
+  }
+};
+const comparePassword = async (plainPassword, hashedPassword) => {
+  try {
+    const isMatch = await bcrypt.compare(plainPassword, hashedPassword);
+    return isMatch;
+  } catch (err) {
+    console.error("비밀번호 비교실패", err);
+    throw err;
+  }
+};
+
 export const testHandler = (req, res) => {
   const data = { message: "테스트 메세지 from  Server!" };
   res.status(200).json(data);
@@ -12,12 +35,13 @@ export const postLogin = async (req, res) => {
   }
   const exists = await User.exists({ studentNumber });
   const user = await User.findOne({ studentNumber });
+
   if (!exists) {
     return res.status(404).json({
       message: "가입되지 않은 학번입니다.",
     });
   } else {
-    if (password === user.password) {
+    if (comparePassword(password, user.password)) {
       // req.session.user = user;
       // req.session.isLogin = true;
       // res.cookie("userId", user._id, {
@@ -51,6 +75,7 @@ export const postJoin = async (req, res) => {
     studentNumber,
     adminStatus,
   } = req.body.user;
+
   const exist = await User.exists({ email });
   if (exist) {
     return res.status(400).json({ message: "이미 존재하는 계정" });
@@ -58,12 +83,13 @@ export const postJoin = async (req, res) => {
   if (password !== password2) {
     return res.status(400).json({ message: "비밀번호가 일치하지 않습니다" });
   }
+  const encryptedPassword = await encryptPassword(password);
   try {
     if (adminStatus == "임원") {
       await User.create({
         name,
         email,
-        password,
+        password: encryptedPassword,
         phoneNumber,
         studentNumber,
         adminStatus: true,
@@ -72,7 +98,7 @@ export const postJoin = async (req, res) => {
       await User.create({
         name,
         email,
-        password,
+        password: encryptedPassword,
         phoneNumber,
         studentNumber,
         adminStatus: false,
