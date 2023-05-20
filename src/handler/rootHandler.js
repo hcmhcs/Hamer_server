@@ -24,14 +24,13 @@ const comparePassword = async (plainPassword, hashedPassword) => {
 };
 
 export const testHandler = (req, res) => {
-  const data = { message: "테스트 메세지 from  Server!" };
+  const data = { message: "성공! (from server)" };
   res.status(200).json(data);
 };
 export const postComparePassword = async (req, res) => {
   const { _id, password } = req.body;
   const user = await User.findOne({ _id });
-  console.log(comparePassword(password, user.password));
-  console.log(user.password);
+
   if (await comparePassword(password, user.password)) {
     return res.status(204).json({ message: "성공" });
   } else {
